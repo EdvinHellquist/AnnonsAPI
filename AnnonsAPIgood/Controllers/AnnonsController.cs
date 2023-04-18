@@ -104,5 +104,45 @@ namespace AnnonsAPIgood.Controllers
 
             return Ok(An.AnId);
         }
+
+        [HttpPost ("/annonsor/create")]
+        public async Task<IActionResult> CreateAnnonsor([FromBody] Annonsorer An)
+        {
+            Random rand = new Random();
+            var postId = rand.Next();
+            var annonsor = new Annonsorer
+            {
+                AnId = postId,
+                AnNamn = An.AnNamn,
+                AnTele = An.AnTele,
+                AnOrgnr = An.AnOrgnr,
+                AnSubnr = An.AnSubnr
+            };
+            try
+            {
+                if (string.IsNullOrEmpty(An.AnNamn)) throw new Exception("Advertiser must have a name");
+                if (!An.AnOrgnr.HasValue && !An.AnSubnr.HasValue) throw new Exception("Either an org number or subscriber number has to be present");
+                if (An.AnUtdadressNavigation == null && An.AnFakturaadressNavigation == null) throw new Exception("No adress");
+                var checkAdIdExists = (from dbAn in _context.TblAnnonsorers where dbAn.AnId.Equals(An.AnId) select dbAn).Count();
+                if (checkAdIdExists > 1) throw new Exception("Id does already exist!");
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            if(An.AnFakturaadressNavigation != null)
+            {
+                An.AnFakturaadressNavigation.AdrAnnonsor = postId;
+                await _context.TblAdresses.AddAsync(An.AnFakturaadressNavigation);
+            }
+            if (An.AnUtdadressNavigation != null)
+            {
+                An.AnUtdadressNavigation.AdrAnnonsor = postId;
+                await _context.TblAdresses.AddAsync(An.AnUtdadressNavigation);
+            }
+            await _context.SaveChangesAsync();
+            _context.TblAnnonsorers.Add(annonsor);
+            await _context.SaveChangesAsync();
+            return Ok(An.AnId);
+        }
     }
 }

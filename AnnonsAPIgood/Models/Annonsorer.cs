@@ -14,9 +14,9 @@ public partial class Annonsorer
     public long? AnOrgnr { get; set; }
 
     public long? AnSubnr { get; set; }
-    [JsonIgnore]
+    
     public int? AnFakturaadress { get; set; }
-    [JsonIgnore]
+    
     public int? AnUtdadress { get; set; }
     
     public virtual Adress? AnFakturaadressNavigation { get; set; }
