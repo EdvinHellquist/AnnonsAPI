@@ -22,7 +22,7 @@ namespace AnnonsAPIgood.Controllers
         public async Task<IActionResult> GetAllAds()
         {
             return Ok(await _context.TblAds
-                .Include(p => p.AdAnnonsorNavigation)
+                
                 .ToListAsync());
         }
         [HttpGet ("/annons/{Id}", Name = "Get ad with Id")]
@@ -49,29 +49,27 @@ namespace AnnonsAPIgood.Controllers
                 .ToListAsync());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateNewAd([FromBody] Ad ad, bool sub)
-        {
-            try
-            {
-                //Validate data
-                if (string.IsNullOrEmpty(ad.AdRubrik)) throw new Exception("Heading of ad is empty!");
-                int checkAdIdExists = (from dbAd in _context.TblAds where dbAd.AdId.Equals(ad.AdId) select dbAd).Count();
-                if (checkAdIdExists > 0) throw new Exception("Id already exists!");
-                int checkAnnonsorExists = (from dbAn in _context.TblAnnonsorers where dbAn.AnId.Equals(ad.AdAnnonsor) select dbAn).Count();
-                if (checkAnnonsorExists == 0) throw new Exception("That advertiser does not exist");
-
-                if (sub.Equals(true)) ad.AdAnnonspris = 0; else ad.AdAnnonspris = 40;
-                _context.Add(ad);
-                await _context.SaveChangesAsync(); //måste callas
-            } catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateNewAd([FromBody] Ad ad)
+        //{
+        //    try
+        //    {
+        //        //Validate data
+        //        if (string.IsNullOrEmpty(ad.AdRubrik)) throw new Exception("Heading of ad is empty!");
+        //        int checkAdIdExists = (from dbAd in _context.TblAds where dbAd.AdId.Equals(ad.AdId) select dbAd).Count();
+        //        if (checkAdIdExists > 0) throw new Exception("Id already exists!");
+        //        //int checkAnnonsorExists = (from dbAn in _context.TblAnnonsorers where dbAn.AnId.Equals(ad.AdAnnonsor) select dbAn).Count();
+        //        //if (checkAnnonsorExists == 0) throw new Exception("That advertiser does not exist");
+        //        _context.Add(ad);
+        //        await _context.SaveChangesAsync(); //måste callas
+        //    } catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
 
             
-            return Ok(ad.AdId);
-        }
+        //    return Ok(ad.AdId);
+        //}
         [HttpPut ("/annonsor/update")]
         public async Task<IActionResult> UpdateAnnonsor([FromBody] Annonsorer An)
         {
@@ -103,6 +101,26 @@ namespace AnnonsAPIgood.Controllers
             }
 
             return Ok(An.AnId);
+        }
+
+        [HttpPost]
+        [Route ("/annons_new")]
+        public async Task<IActionResult> AddAnnons(AddAnnonsRequest addAnnonsRequest)
+        {
+            var ad = new Ad()
+            {
+                AdId = addAnnonsRequest.AdId,
+                AdRubrik = addAnnonsRequest.AdRubrik,
+                AdInnehåll = addAnnonsRequest.AdInnehåll,
+                AdPris = addAnnonsRequest.AdPris,
+                AdAnnonspris = addAnnonsRequest.AdAnnonspris,
+                AdAnnonsor = addAnnonsRequest.AdAnnonsor,
+            };
+
+            await _context.TblAds.AddAsync(ad);
+            await _context.SaveChangesAsync();
+
+            return Ok(ad);
         }
 
         [HttpPost ("/annonsor/create")]
