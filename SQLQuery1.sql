@@ -1,0 +1,22 @@
+﻿INSERT INTO [dbo].[tbl.Ads] ([ad_Id], [ad_pris], [ad_Innehåll], [ad_Rubrik], [ad_Annonspris], [ad_Annonsor])
+VALUES 
+    (1, 50, 'Apple iPhone 12, 64GB, Vit. Nyskick.', 'Säljer en iPhone 12 i nyskick.', 0, 1),
+    (2, 60, 'Sony PlayStation 5 - Disk Version', 'Säljer en PS5 i mycket gott skick.', 0, 1),
+    (3, 45, 'Liten trähylla i ljust trä', 'Säljer en liten hylla i fint skick.', 0, 1),
+    (4, 75, 'Soffbord i mörkt trä', 'Säljer ett soffbord i fint skick.', 40, 0),
+    (5, 80, 'Nintendo Switch med originalkartong', 'Säljer en Nintendo Switch i gott skick.', 40, 0),
+    (6, 65, 'Köksbord i massivt trä', 'Säljer ett köksbord i fint skick.', 40, 0),
+    (7, 70, 'Samsung Galaxy S21, 128GB, Svart', 'Säljer en Galaxy S21 i mycket gott skick.', 0, 1),
+    (8, 55, 'Stilren taklampa i mässing', 'Säljer en snygg taklampa i fint skick.', 40, 0),
+    (9, 40, 'Snyggt sideboard i ek', 'Säljer ett sideboard i fint skick.', 0, 1),
+    (10, 50, 'Stor svart resväska på hjul', 'Säljer en stor och rymlig resväska.', 0, 1),
+    (11, 60, 'Ny inlines, storlek 42', 'Säljer ett par nya inlines i storlek 42.', 0, 1),
+    (12, 45, 'Damcykel i fint skick', 'Säljer en damcykel i gott skick.', 0, 1),
+    (13, 75, 'Samsung 55-tums 4K UHD Smart TV', 'Säljer en 55-tums Samsung TV i fint skick.', 40, 0),
+    (14, 80, 'Sänggavel i vitt trä', 'Säljer en sänggavel i fint skick.', 40, 0),
+    (15, 65, 'Snyggt matbord i mörkt trä', 'Säljer ett matbord i fint skick.', 40, 0),
+    (16, 70, 'Bose QuietComfort 35 hörlurar', 'Säljer ett par Bose hörlurar i fint skick.', 0, 1),
+    (17, 55, 'Snygg plånbok i läder', 'Säljer en stilren plånbok i fint skick.', 40, 0),
+    (18, 40, 'Ljusstake i vit marmor', 'Säljer en vacker ljusstake i fint skick.', 40, 0),
+(19, 50, 'Nike Air Max-skor, storlek 42', 'Säljer ett par Air Max-skor i fint skick.', 0, 1),
+(20, 60, 'Canon EOS 2000D med objektiv', 'Säljer en systemkamera i mycket gott skick.', 0, 1);
